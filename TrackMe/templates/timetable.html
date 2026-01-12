@@ -1,0 +1,231 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="space-y-8">
+    <!-- Header -->
+    <header class="glass-panel p-6 rounded-2xl">
+        <div class="flex items-center gap-3">
+            <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <div>
+                <h1 class="text-3xl font-bold text-white tracking-tight">Time Table</h1>
+                <p class="text-slate-400 mt-1">Your weekly class schedule</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Timetable -->
+    <div class="glass-panel p-6 rounded-2xl overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full min-w-full border-collapse">
+                <!-- Table Header -->
+                <thead>
+                    <tr>
+                        <th class="bg-blue-600 text-white font-semibold px-4 py-3 text-left border border-slate-700">
+                            Time</th>
+                        <th class="bg-blue-600 text-white font-semibold px-4 py-3 text-center border border-slate-700">
+                            Monday</th>
+                        <th class="bg-blue-600 text-white font-semibold px-4 py-3 text-center border border-slate-700">
+                            Tuesday</th>
+                        <th class="bg-blue-600 text-white font-semibold px-4 py-3 text-center border border-slate-700">
+                            Wednesday</th>
+                        <th class="bg-blue-600 text-white font-semibold px-4 py-3 text-center border border-slate-700">
+                            Thursday</th>
+                        <th class="bg-blue-600 text-white font-semibold px-4 py-3 text-center border border-slate-700">
+                            Friday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 8-9 AM -->
+                    <tr class="bg-slate-800/40 hover:bg-slate-800/60 transition-colors">
+                        <td class="px-4 py-3 font-medium text-slate-300 border border-slate-700">8:00 - 9:00</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-md text-sm font-medium border border-indigo-500/30">DMGT</span>
+                        </td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-purple-500/20 text-purple-300 px-3 py-1 rounded-md text-sm font-medium border border-purple-500/30">DSPD-I</span>
+                        </td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-md text-sm font-medium border border-emerald-500/30">M-II</span>
+                        </td>
+                    </tr>
+
+                    <!-- 9-10 AM -->
+                    <tr class="bg-slate-800/20 hover:bg-slate-800/40 transition-colors">
+                        <td class="px-4 py-3 font-medium text-slate-300 border border-slate-700">9:00 - 10:00</td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-md text-sm font-medium border border-emerald-500/30">M-II</span>
+                        </td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-md text-sm font-medium border border-emerald-500/30">M-II</span>
+                        </td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                    </tr>
+
+                    <!-- 10-11 AM -->
+                    <tr class="bg-slate-800/40 hover:bg-slate-800/60 transition-colors">
+                        <td class="px-4 py-3 font-medium text-slate-300 border border-slate-700">10:00 - 11:00</td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-purple-500/20 text-purple-300 px-3 py-1 rounded-md text-sm font-medium border border-purple-500/30">DSPD-I</span>
+                        </td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-md text-sm font-medium border border-indigo-500/30">DMGT</span>
+                        </td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-purple-500/20 text-purple-300 px-3 py-1 rounded-md text-sm font-medium border border-purple-500/30">DSPD-I</span>
+                        </td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-blue-500/20 text-blue-300 px-3 py-1 rounded-md text-sm font-medium border border-blue-500/30">DCMP</span>
+                        </td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-blue-500/20 text-blue-300 px-3 py-1 rounded-md text-sm font-medium border border-blue-500/30">DCMP</span>
+                        </td>
+                    </tr>
+
+                    <!-- 11-12 PM -->
+                    <tr class="bg-slate-800/20 hover:bg-slate-800/40 transition-colors">
+                        <td class="px-4 py-3 font-medium text-slate-300 border border-slate-700">11:00 - 12:00</td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-blue-500/20 text-blue-300 px-3 py-1 rounded-md text-sm font-medium border border-blue-500/30">DCMP</span>
+                        </td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-amber-500/20 text-amber-300 px-3 py-1 rounded-md text-sm font-medium border border-amber-500/30">BEE</span>
+                        </td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-amber-500/20 text-amber-300 px-3 py-1 rounded-md text-sm font-medium border border-amber-500/30">BEE</span>
+                        </td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                    </tr>
+
+                    <!-- 12-1 PM -->
+                    <tr class="bg-slate-800/40 hover:bg-slate-800/60 transition-colors">
+                        <td class="px-4 py-3 font-medium text-slate-300 border border-slate-700">12:00 - 1:00</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-md text-sm font-medium border border-indigo-500/30">DMGT</span>
+                        </td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-amber-500/20 text-amber-300 px-3 py-1 rounded-md text-sm font-medium border border-amber-500/30">BEE</span>
+                        </td>
+                    </tr>
+
+                    <!-- 1-2 PM LUNCH -->
+                    <tr class="bg-orange-500/10 hover:bg-orange-500/20 transition-colors">
+                        <td class="px-4 py-3 font-bold text-orange-400 border border-slate-700">1:00 - 2:00</td>
+                        <td colspan="5"
+                            class="px-4 py-3 text-center font-semibold text-orange-300 border border-slate-700">
+                            🍽️ LUNCH BREAK
+                        </td>
+                    </tr>
+
+                    <!-- 2-3 PM -->
+                    <tr class="bg-slate-800/20 hover:bg-slate-800/40 transition-colors">
+                        <td class="px-4 py-3 font-medium text-slate-300 border border-slate-700">2:00 - 3:00</td>
+                        <td rowspan="2" class="px-4 py-3 text-center align-middle border border-slate-700">
+                            <span
+                                class="inline-block bg-amber-500/20 text-amber-300 px-3 py-2 rounded-md text-sm font-medium border border-amber-500/30">BEE
+                                LAB</span>
+                        </td>
+                        <td rowspan="2" class="px-4 py-3 text-center align-middle border border-slate-700">
+                            <span
+                                class="inline-block bg-purple-500/20 text-purple-300 px-3 py-2 rounded-md text-sm font-medium border border-purple-500/30">DSPD-I
+                                LAB</span>
+                        </td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td rowspan="2" class="px-4 py-3 text-center align-middle border border-slate-700">
+                            <span
+                                class="inline-block bg-blue-500/20 text-blue-300 px-3 py-2 rounded-md text-sm font-medium border border-blue-500/30">DCMP
+                                LAB</span>
+                        </td>
+                    </tr>
+
+                    <!-- 3-4 PM -->
+                    <tr class="bg-slate-800/40 hover:bg-slate-800/60 transition-colors">
+                        <td class="px-4 py-3 font-medium text-slate-300 border border-slate-700">3:00 - 4:00</td>
+                        <!-- Monday BEE LAB continues -->
+                        <!-- Tuesday DSPD-I LAB continues -->
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <!-- Friday DCMP LAB continues -->
+                    </tr>
+
+                    <!-- 4-5 PM -->
+                    <tr class="bg-slate-800/20 hover:bg-slate-800/40 transition-colors">
+                        <td class="px-4 py-3 font-medium text-slate-300 border border-slate-700">4:00 - 5:00</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-md text-sm font-medium border border-emerald-500/30">M-II
+                                Tut</span>
+                        </td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-pink-500/20 text-pink-300 px-3 py-1 rounded-md text-sm font-medium border border-pink-500/30">HISP-II</span>
+                        </td>
+                    </tr>
+
+                    <!-- 5-6 PM -->
+                    <tr class="bg-slate-800/40 hover:bg-slate-800/60 transition-colors">
+                        <td class="px-4 py-3 font-medium text-slate-300 border border-slate-700">5:00 - 6:00</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center border border-slate-700">
+                            <span
+                                class="inline-block bg-purple-500/20 text-purple-300 px-3 py-1 rounded-md text-sm font-medium border border-purple-500/30">DSPD-I
+                                Tut</span>
+                        </td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                        <td class="px-4 py-3 text-center text-slate-500 border border-slate-700">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Legend -->
+        <div class="mt-6 pt-6 border-t border-slate-700">
+            <p class="text-sm font-medium text-slate-400 mb-3">Subject Legend:</p>
+            <div class="flex flex-wrap gap-3">
+                <span
+                    class="inline-block bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-md text-xs font-medium border border-emerald-500/30">M-II</span>
+                <span
+                    class="inline-block bg-purple-500/20 text-purple-300 px-3 py-1 rounded-md text-xs font-medium border border-purple-500/30">DSPD-I</span>
+                <span
+                    class="inline-block bg-blue-500/20 text-blue-300 px-3 py-1 rounded-md text-xs font-medium border border-blue-500/30">DCMP</span>
+                <span
+                    class="inline-block bg-amber-500/20 text-amber-300 px-3 py-1 rounded-md text-xs font-medium border border-amber-500/30">BEE</span>
+                <span
+                    class="inline-block bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-md text-xs font-medium border border-indigo-500/30">DMGT</span>
+                <span
+                    class="inline-block bg-pink-500/20 text-pink-300 px-3 py-1 rounded-md text-xs font-medium border border-pink-500/30">HISP-II</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,508 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="space-y-8">
+
+    <!-- Top Section: Header & Progress -->
+    <header class="glass-panel p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="w-full md:w-1/3">
+            <h1 class="text-3xl font-bold text-white tracking-tight">Today's Progress</h1>
+            <p class="text-slate-400 mt-1">{{ today }}</p>
+        </div>
+
+        <div class="w-full md:w-2/3 flex items-center gap-4">
+            <div class="flex-grow">
+                <div class="flex justify-between items-end mb-2">
+                    <span class="text-sm font-medium text-slate-300">Completion Rate</span>
+                    <span class="text-6xl font-black text-emerald-400 tracking-tight" id="progress-text">{{
+                        completion_rate }}%</span>
+                </div>
+                <div class="w-full bg-slate-800 rounded-full h-4 overflow-hidden border border-slate-700/50">
+                    <div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-4 rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(16,185,129,0.5)]"
+                        id="progress-bar" style="width: {{ completion_rate }}%"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Grid: 1 Col Mobile (default), 2 Col Desktop (md:grid-cols-3) -->
+    <!-- Using 3 columns ratio: 1/3 Left, 2/3 Right for nice balance -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Left Column: Add Task (Sticky on desktop) -->
+        <div class="md:col-span-1 space-y-8">
+            <div class="glass-panel p-6 rounded-2xl sticky top-8">
+                <h2 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    New Habit
+                </h2>
+
+                <form action="/habits" method="POST" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-400 mb-2">Habit Name</label>
+                        <input type="text" name="name" required placeholder="e.g. Read 10 pages"
+                            class="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder-slate-600">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-400 mb-3">Frequency</label>
+                        <div class="flex items-center bg-slate-900/50 p-1 rounded-xl border border-slate-700">
+                            <!-- Radio Toggle logic -->
+                            <label class="flex-1 cursor-pointer">
+                                <input type="radio" name="type" value="today" class="peer sr-only">
+                                <span
+                                    class="block text-center py-2 text-sm rounded-lg text-slate-400 peer-checked:bg-slate-700 peer-checked:text-white transition-all">Today</span>
+                            </label>
+                            <label class="flex-1 cursor-pointer">
+                                <input type="radio" name="type" value="recurring" class="peer sr-only" checked>
+                                <span
+                                    class="block text-center py-2 text-sm rounded-lg text-slate-400 peer-checked:bg-slate-700 peer-checked:text-white transition-all">Every
+                                    Day</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-medium py-3 rounded-xl transition-all shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 active:scale-95">
+                        Add Habit
+                    </button>
+                </form>
+            </div>
+
+            <!-- Analytics Suite Section -->
+            <div class="glass-panel p-6 rounded-2xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-semibold text-white">Analytics Suite</h2>
+                </div>
+
+                <!-- Period Tabs -->
+                <div class="flex bg-slate-800/50 p-1 rounded-lg mb-3 border border-slate-700/50">
+                    <button onclick="switchPeriod('week')" id="btn-week"
+                        class="flex-1 py-1.5 text-xs font-medium rounded-md text-white bg-blue-600 shadow-sm transition-all">Week</button>
+                    <button onclick="switchPeriod('month')" id="btn-month"
+                        class="flex-1 py-1.5 text-xs font-medium rounded-md text-slate-400 hover:text-white transition-all">Month</button>
+                    <button onclick="switchPeriod('year')" id="btn-year"
+                        class="flex-1 py-1.5 text-xs font-medium rounded-md text-slate-400 hover:text-white transition-all">Year</button>
+                </div>
+
+                <!-- Month Selector (visible only in month view) -->
+                <div id="month-selector" class="mb-3 hidden">
+                    <select id="month-dropdown"
+                        class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                        <option value="1">January 2026</option>
+                        <option value="2">February 2026</option>
+                        <option value="3">March 2026</option>
+                        <option value="4">April 2026</option>
+                        <option value="5">May 2026</option>
+                        <option value="6">June 2026</option>
+                        <option value="7">July 2026</option>
+                        <option value="8">August 2026</option>
+                        <option value="9">September 2026</option>
+                        <option value="10">October 2026</option>
+                        <option value="11">November 2026</option>
+                        <option value="12">December 2026</option>
+                    </select>
+                </div>
+
+                <!-- Chart Type Toggle -->
+                <div class="mb-4">
+                    <p class="text-xs text-slate-500 mb-2">Chart Type</p>
+                    <div class="flex gap-2">
+                        <button onclick="switchChartType('line')" id="btn-line"
+                            class="flex-1 py-1.5 text-xs font-medium rounded-md bg-slate-800 text-slate-400 border border-slate-700 hover:text-white hover:border-slate-600 transition-all">Line</button>
+                        <button onclick="switchChartType('bar')" id="btn-bar"
+                            class="flex-1 py-1.5 text-xs font-medium rounded-md text-white bg-slate-700 border border-slate-600 transition-all">Bar</button>
+                        <button onclick="switchChartType('pie')" id="btn-pie"
+                            class="flex-1 py-1.5 text-xs font-medium rounded-md bg-slate-800 text-slate-400 border border-slate-700 hover:text-white hover:border-slate-600 transition-all">Pie</button>
+                    </div>
+                </div>
+
+                <div class="relative h-52 w-full">
+                    <canvas id="analyticsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Task List -->
+        <div class="md:col-span-2">
+            <h2 class="text-2xl font-bold text-white mb-6">Your Tasks</h2>
+
+            {% if habits|length == 0 %}
+            <div class="glass-panel p-10 rounded-2xl text-center border-dashed border-2 border-slate-700">
+                <p class="text-slate-500 text-lg">No habits set for today. Start building one!</p>
+            </div>
+            {% else %}
+            <div class="grid gap-4">
+                {% for habit in habits %}
+                <div class="glass-card rounded-xl p-5 flex items-center gap-5 group relative overflow-hidden transition-all duration-500 hover:border-slate-600
+                                {% if habit.completed %}border-emerald-500/30 bg-emerald-900/10{% endif %}"
+                    id="card-{{ habit.id }}">
+
+                    <!-- Glow Effect Background for completed -->
+                    <div class="absolute inset-0 bg-emerald-500/5 opacity-0 transition-opacity duration-500 pointer-events-none 
+                                    {% if habit.completed %}opacity-100{% endif %}" id="glow-{{ habit.id }}"></div>
+
+                    <label class="relative cursor-pointer z-10">
+                        <input type="checkbox" class="peer sr-only habit-checkbox" data-id="{{ habit.id }}" {% if
+                            habit.completed %}checked{% endif %}>
+
+                        <!-- Custom Checkbox -->
+                        <div
+                            class="w-7 h-7 rounded-lg border-2 border-slate-600 bg-slate-800 flex items-center justify-center transition-all 
+                                        peer-checked:bg-emerald-500 peer-checked:border-emerald-500 peer-hover:border-slate-500 shadow-sm">
+                            <svg class="w-4 h-4 text-white transform scale-0 peer-checked:scale-100 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </label>
+
+                    <div class="flex-1 z-10 transition-opacity duration-300 {% if habit.completed %}opacity-50{% endif %}"
+                        id="content-{{ habit.id }}">
+                        <h3 class="text-lg font-medium text-slate-100 group-hover:text-white transition-colors">{{
+                            habit.name }}</h3>
+                        <div class="flex items-center gap-2 mt-1 flex-wrap">
+                            <span class="text-xs font-medium px-2 py-0.5 rounded-full border 
+                                    {% if habit.type == 'Daily' %}
+                                        bg-indigo-500/10 text-indigo-300 border-indigo-500/20
+                                    {% else %}
+                                        bg-amber-500/10 text-amber-300 border-amber-500/20
+                                    {% endif %}">
+                                {{ habit.type }}
+                            </span>
+                            {% if habit.streak and habit.streak > 0 %}
+                            <span
+                                class="text-xs font-medium px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-300 border border-orange-500/20">
+                                🔥 {{ habit.streak }} day streak
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Delete Button -->
+                    <button onclick="deleteHabit({{ habit.id }})"
+                        class="text-slate-500 hover:text-red-500 hover:bg-red-500/10 p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all z-20"
+                        title="Delete Task">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Inline Script as Requested -->
+<script>
+    let analyticsChart = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. Interactivity: Toggle Task ---
+        const checkboxes = document.querySelectorAll('.habit-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', async (e) => {
+                const habitId = e.target.getAttribute('data-id');
+                const isChecked = e.target.checked;
+
+                // Visual Elements
+                const card = document.getElementById(`card-${habitId}`);
+                const glow = document.getElementById(`glow-${habitId}`);
+                const content = document.getElementById(`content-${habitId}`);
+
+                // Immediate UI Updates
+                updateCardVisuals(card, glow, content, isChecked);
+                updateProgressBar(); // Update progress bar instantly
+
+                try {
+                    const response = await fetch(`/toggle/${habitId}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    if (!response.ok) throw new Error('API Error');
+                    const data = await response.json();
+                    if (data.completed !== isChecked) {
+                        e.target.checked = data.completed;
+                        updateCardVisuals(card, glow, content, data.completed);
+                        updateProgressBar(); // Re-sync if server state differs
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    e.target.checked = !isChecked;
+                    updateCardVisuals(card, glow, content, !isChecked);
+                    updateProgressBar(); // Revert progress bar
+                    alert('Connection failed.');
+                }
+            });
+        });
+
+        // Initialize advanced analytics - moved to bottom of script
+    });
+
+    // Delete Habit Logic
+    async function deleteHabit(id) {
+        if (!confirm('Are you sure you want to delete this task?')) return;
+
+        try {
+            const response = await fetch(`/api/delete_habit/${id}`, { method: 'DELETE' });
+            if (response.ok) {
+                const card = document.getElementById(`card-${id}`);
+                // Smooth fade out
+                card.style.transition = "all 0.5s ease";
+                card.style.opacity = "0";
+                card.style.transform = "scale(0.9)";
+                card.style.marginBottom = "-5rem"; // Collapse space
+
+                setTimeout(() => {
+                    card.remove();
+                    updateProgressBar(); // Recalculate progress
+                }, 500);
+            } else {
+                alert('Failed to delete task');
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Error deleting task');
+        }
+    }
+
+    function updateCardVisuals(card, glow, content, isCompleted) {
+        if (isCompleted) {
+            card.classList.add('border-emerald-500/30', 'bg-emerald-900/10');
+            glow.classList.remove('opacity-0');
+            glow.classList.add('opacity-100');
+            content.classList.add('opacity-50');
+        } else {
+            card.classList.remove('border-emerald-500/30', 'bg-emerald-900/10');
+            glow.classList.remove('opacity-100');
+            glow.classList.add('opacity-0');
+            content.classList.remove('opacity-50');
+        }
+    }
+
+    function updateProgressBar() {
+        // Calculate completion percentage in real-time
+        const checkboxes = document.querySelectorAll('.habit-checkbox');
+        const total = checkboxes.length;
+        const checked = document.querySelectorAll('.habit-checkbox:checked').length;
+
+        const percentage = total === 0 ? 0 : Math.round((checked / total) * 100);
+
+        // Update progress bar elements
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+
+        if (progressBar && progressText) {
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `${percentage}%`;
+        }
+    }
+
+    // --- 2. Advanced Analytics Suite ---
+    let currentPeriod = 'week';
+    let currentChartType = 'bar';
+    let selectedMonth = new Date().getMonth() + 1;
+    let selectedYear = 2026;
+
+    // Set initial month in dropdown
+    document.getElementById('month-dropdown').value = selectedMonth;
+    document.getElementById('month-dropdown').addEventListener('change', function () {
+        selectedMonth = parseInt(this.value);
+        updateChart();
+    });
+
+    function switchPeriod(period) {
+        currentPeriod = period;
+
+        // Update period button styling
+        ['week', 'month', 'year'].forEach(p => {
+            const btn = document.getElementById(`btn-${p}`);
+            if (p === period) {
+                btn.className = "flex-1 py-1.5 text-xs font-medium rounded-md text-white bg-blue-600 shadow-sm transition-all";
+            } else {
+                btn.className = "flex-1 py-1.5 text-xs font-medium rounded-md text-slate-400 hover:text-white transition-all";
+            }
+        });
+
+        // Show/hide month selector
+        const monthSelector = document.getElementById('month-selector');
+        if (period === 'month') {
+            monthSelector.classList.remove('hidden');
+        } else {
+            monthSelector.classList.add('hidden');
+        }
+
+        updateChart();
+    }
+
+    function switchChartType(type) {
+        currentChartType = type;
+
+        // Update chart type button styling
+        ['line', 'bar', 'pie'].forEach(t => {
+            const btn = document.getElementById(`btn-${t}`);
+            if (t === type) {
+                btn.className = "flex-1 py-1.5 text-xs font-medium rounded-md text-white bg-slate-700 border border-slate-600 transition-all";
+            } else {
+                btn.className = "flex-1 py-1.5 text-xs font-medium rounded-md bg-slate-800 text-slate-400 border border-slate-700 hover:text-white hover:border-slate-600 transition-all";
+            }
+        });
+
+        updateChart();
+    }
+
+    async function updateChart() {
+        try {
+            // Build query parameters
+            const params = new URLSearchParams({
+                chartType: currentChartType,
+                month: selectedMonth,
+                year: selectedYear
+            });
+
+            const response = await fetch(`/api/chart-data/${currentPeriod}?${params}`);
+            if (!response.ok) throw new Error('Failed to fetch chart data');
+            const result = await response.json();
+
+            renderChart(result.labels, result.data, result.pieData);
+        } catch (error) {
+            console.error('Chart Error:', error);
+        }
+    }
+
+    function renderChart(labels, dataPoints, pieData) {
+        const ctx = document.getElementById('analyticsChart').getContext('2d');
+
+        // Destroy old chart
+        if (analyticsChart) {
+            analyticsChart.destroy();
+        }
+
+        // Gradient
+        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, 'rgba(37, 99, 235, 0.5)');
+        gradient.addColorStop(1, 'rgba(37, 99, 235, 0)');
+
+        // Pie chart colors
+        const pieColors = [
+            '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6',
+            '#ec4899', '#14b8a6', '#f97316', '#06b6d4', '#84cc16'
+        ];
+
+        let chartConfig;
+
+        if (currentChartType === 'pie') {
+            // Pie Chart Configuration
+            chartConfig = {
+                type: 'pie',
+                data: {
+                    labels: pieData.map(d => d.label),
+                    datasets: [{
+                        data: pieData.map(d => d.value),
+                        backgroundColor: pieColors.slice(0, pieData.length),
+                        borderColor: '#0f172a',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'right',
+                            labels: {
+                                color: '#cbd5e1',
+                                padding: 10,
+                                font: { size: 10 }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#1e293b',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            padding: 10,
+                            callbacks: {
+                                label: function (context) {
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                    return `${context.label}: ${context.parsed} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        } else {
+            // Line/Bar Chart Configuration
+            chartConfig = {
+                type: currentChartType,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Completed Habits',
+                        data: dataPoints,
+                        backgroundColor: currentChartType === 'line' ? gradient : '#2563eb',
+                        borderColor: '#3b82f6',
+                        borderWidth: currentChartType === 'line' ? 2 : 0,
+                        borderRadius: 4,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#3b82f6',
+                        pointRadius: currentChartType === 'line' ? 3 : 0,
+                        fill: true,
+                        tension: currentChartType === 'line' ? 0.4 : 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1e293b',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            padding: 10,
+                            displayColors: false,
+                            cornerRadius: 8
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#64748b', font: { size: 10 } },
+                            border: { display: false }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: {
+                                color: '#64748b',
+                                font: { size: 10 },
+                                maxRotation: 0,
+                                autoSkip: true,
+                                maxTicksLimit: 10
+                            },
+                            border: { display: false }
+                        }
+                    }
+                }
+            };
+        }
+
+        analyticsChart = new Chart(ctx, chartConfig);
+    }
+
+    // Initialize chart with default view
+    // Initialize chart on page load
+    updateChart();
+</script>
+{% endblock %}

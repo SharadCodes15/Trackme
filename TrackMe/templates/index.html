@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackMe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom Checkbox Style */
+        .checkbox-wrapper input:checked + div {
+            background-color: #10b981; /* emerald-500 */
+            border-color: #10b981;
+        }
+        .checkbox-wrapper input:checked + div svg {
+            display: block;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        zinc: {
+                            750: '#27272a', /* Custom shade between 700 and 800 */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen">
+    
+    <div class="max-w-5xl mx-auto px-4 py-8 md:py-12">
+        <header class="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight text-white mb-2">Track Me</h1>
+                <p class="text-zinc-400">Your daily habits for <span class="text-zinc-200 font-medium">{{ today }}</span></p>
+            </div>
+            <!-- Potential Stats or Add button area -->
+            <button class="bg-zinc-800 hover:bg-zinc-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-zinc-700">
+                + New Habit
+            </button>
+        </header>
+
+        <main>
+            {% if habits|length == 0 %}
+            <div class="text-center py-20 bg-zinc-900 rounded-xl border border-zinc-800">
+                <p class="text-zinc-500 text-lg">No habits found for today.</p>
+            </div>
+            {% else %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {% for habit in habits %}
+                <div class="group bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-zinc-700 transition-all duration-300 flex items-center gap-4 shadow-sm hover:shadow-md">
+                    
+                    <label class="checkbox-wrapper relative cursor-pointer">
+                        <input type="checkbox" 
+                               class="sr-only habit-checkbox" 
+                               data-id="{{ habit.id }}" 
+                               {% if habit.completed %}checked{% endif %}>
+                        <div class="w-6 h-6 border-2 border-zinc-600 rounded-md bg-zinc-800 flex items-center justify-center transition-colors hover:border-zinc-500">
+                            <svg class="w-4 h-4 text-white hidden pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                    </label>
+
+                    <div class="flex-1">
+                        <h3 class="font-medium text-lg text-zinc-200 group-hover:text-white transition-colors {% if habit.completed %}line-through text-zinc-500{% endif %}" id="label-{{ habit.id }}">
+                            {{ habit.name }}
+                        </h3>
+                        <span class="text-xs font-medium px-2 py-0.5 rounded-full 
+                            {% if habit.type == 'Daily' %}bg-blue-900/30 text-blue-400{% else %}bg-purple-900/30 text-purple-400{% endif %}">
+                            {{ habit.type }}
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </main>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
